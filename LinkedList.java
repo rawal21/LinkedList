@@ -1,3 +1,5 @@
+import java.nio.channels.Pipe.SourceChannel;
+
 public class LinkedList {
 
   public static class Node {
@@ -142,6 +144,68 @@ public void removeLast() {
     size--; // Decrease the size of the linked list
 }
 
+public int itrSearch(int key)
+{
+    Node temp = head;
+    int i = 0;
+    while(temp!=null)
+    {
+       if(temp.data==key)
+       {
+        return i ;
+       }
+       temp = temp.next;
+       i++;
+    }
+
+    // key not found 
+    return -1 ;
+}
+
+public int Helper(Node head , int key)
+{
+    if(head==null){
+        return -1 ;
+    }
+
+    if(head.data ==key)
+    {
+        return 0 ;
+    }
+
+    int idx = Helper(head.next, key);
+
+    if(idx==-1)
+    {
+        return -1 ;
+    }
+
+    return idx+1 ;
+}
+
+public int recSeach(int key)
+{
+    return Helper(head , key);
+}
+
+public void reverse() {
+    Node prev = null;
+    Node current = head; // Start from head
+    Node next;
+
+    while (current != null) {
+        next = current.next; // Store next node
+        current.next = prev; // Reverse link
+        prev = current; // Move prev forward
+        current = next; // Move current forward
+    }
+
+    // After loop, prev will be the new head
+    tail = head; // Old head becomes the new tail
+    head = prev; // New head is the previous node (last node before reversing)
+}
+ 
+
   public static void main(String[] args) {
       LinkedList LL = new LinkedList();
 
@@ -150,12 +214,20 @@ public void removeLast() {
     LL.addFirst(8);
     LL.addFirst(9);
 
-      // Insert value `2` at index `2`
-      LL.add(2, 9);
-      LL.removeFirst();
-      LL.removeLast();
+    //   // Insert value `2` at index `2`
+    //   LL.add(2, 9);
+    //   LL.removeFirst();
+    //   LL.removeLast();
 
+     
+      System.out.println("before reverse");
       LL.printLL();
+      LL.reverse();
+      System.out.println("AFTER REVSER");
+      LL.printLL();
+    //   int keyIdx = LL.recSeach(9);
+    //   System.out.println("Index of 9: " + keyIdx);
+    //   System.out.println(LL.itrSearch(11));
 
   }
 }
